@@ -3,11 +3,9 @@ self.addEventListener('install', event => {
     event.waitUntil(
         caches.open('v1').then(cache => {
             return cache.addAll([
-                'html/camera.html',
-                'html/gallery.html',
-                'html/index.html',
-                'img/512.png',
-                'style/style.css',
+                '/index.html',
+                '/img/512.png',
+                '/style/style.css',
                 '/manifest.webmanifest'
             ])
         })

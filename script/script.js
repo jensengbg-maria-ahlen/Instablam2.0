@@ -8,6 +8,7 @@ if ('serviceWorker' in navigator) {
         })
 }
 
+
 window.addEventListener('load', () => {
     if ('mediaDevices' in navigator) {
         cameraSettings();
@@ -18,7 +19,43 @@ window.addEventListener('load', () => {
     }
 
     notificationSettings();
+
+    gallerySettings();
 });
+
+
+function gallerySettings() {
+    const galleryImg = document.querySelector('.the-gallery');
+    let allImg = ['forest.jpg', 'ocean.jpg', 'turtle.jpg']
+    galleryImg.innerHTML = '';
+ 
+    for(image of allImg) {
+        let theImage = document.createElement('div');
+        theImage.classList.add('image')
+        theImage.innerHTML += 
+            '<img src="img/' + image+ '" alt="Picture in gallery" class="gallery-Images">' +
+            '<p class="location">Photographed at ' + image.city + ', ' + image.country + '.</p>';
+        
+        let downloadLink = document.createElement('a');
+        downloadLink.addEventListener('click', () => {
+            downloadLink.href = galleryImg.src;
+            downloadLink.download = downloadLink.href;
+        })    
+
+        let deleteButton = document.createElement('button');
+        deleteButton.classList.add('delete-button');
+        deleteButton.innerHTML = 'Delete'
+        deleteButton.addEventListener('click', () => {
+            console.log('image', image);
+        })
+        
+        theImage.appendChild(downloadLink);
+        theImage.appendChild(deleteButton);
+        galleryImg.append(theImage);
+    }    
+}
+
+
 
 
 function cameraSettings(position) {
@@ -163,18 +200,13 @@ function addImage(image, position) {
         country: position.country
     }
 
-    console.log(image);
 
     yesButton.addEventListener('click', () => {
-        addToDatabase(img);
+        console.log('YesButton');
     })
 
 
     noButton.addEventListener('click', () => {
-        const pictureTaken = document.querySelector('.picture-taken');
-        let divElem = document.querySelector('.picture');
-
-        pictureTaken.src = "";
-        divElem.classList.add('hidden');
+        console.log('Nobutton')
     })
 }

@@ -1,0 +1,19 @@
+{
+  "name": "instablam2.0",
+  "version": "1.0.0",
+  "description": "A gallery where you can save images",
+  "main": "sw.js",
+  "scripts": {
+    "deploy": "surge . --domain https://maria-ahlen-instablam.surge.sh",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jensengbg-maria-ahlen/Instablam2.0.git"
+  },
+  "author": "Maria Åhlén",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jensengbg-maria-ahlen/Instablam2.0/issues"
+  }
+}
