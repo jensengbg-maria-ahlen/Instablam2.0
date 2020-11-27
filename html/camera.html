@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#86b881"/>
+    
+    <title>Instablam</title>
+    
+    <link rel="stylesheet" href="/style/font-awesome/css/all.css">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="shortcut icon" href="img/192.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="img/192.png">
+    
+    <script defer src="script/script.js" charset="UTF-8"></script>
+</head>
+<body>
+    <main>
+        <header>
+            <h1>INSTABLAM</h1>
+        </header>
+
+        <nav>
+            <a href="/index.html"><i class="fas fa-home"></i></a>
+            <a href="/gallery.html"><i class="fas fa-images"></i></a>
+        </nav>
+
+        <section>
+            <div class="camera">
+                <h2>Take a picture</h2>
+                <p class="error-message"></p>
+                <video src="" autoplay poster="" controls></video>
+                <div>
+                    <button class="camera-on">Camera On</button>
+                    <button class="camera-off hidden">Camera Off</button>
+                    <button id="take-picture" disabled>Take picture</button>
+                    <button class="change-camera hidden">Switch camera</button>
+                </div>
+            </div>
+
+            <div class="picture hidden">
+                <img src="" alt="Picture taken" class="picture-taken">
+                <div>
+                    <h3>Want to save picture to the gallery?</h3>
+                    <button id="yesButton">Yes</button>
+                    <button id="noButton">No</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+</body>
+</html>

@@ -1,0 +1,28 @@
+body {
+    background-color: #86b881;
+}
+
+.gallery-Images {
+    max-height: 30%;
+    max-width: 50%;
+    display: block;
+}
+
+button {
+    padding: 0.8em 1.2em;
+    margin: 0.4em;
+}
+
+.picture-taken {
+    width: 292px;
+    height: 192px;
+}
+
+.hidden {
+    display: none;
+}
+
+a {
+    list-style-type: none;
+    text-decoration: none;
+}
