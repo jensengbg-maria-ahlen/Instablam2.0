@@ -33,4 +33,4 @@ Hope you will enjoy the app.
 
 
 ##### Made by: Maria Åhlén
-Link to published webb page: https://marias-instablam.surge.sh/
+Link to published webb page: https://maria-ahlen-instablam.surge.sh/
