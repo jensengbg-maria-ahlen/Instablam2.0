@@ -24,35 +24,33 @@
         </header>
 
         <section>
-            <div class="camera">
-                <h2>Take a picture</h2>
-                <p class="error-message"></p>
-                <video src="" autoplay poster="" controls></video>
-                <div>
-                    <button class="camera-on">Camera On</button>
-                    <button class="camera-off hidden">Camera Off</button>
-                    <button id="take-picture" disabled>Take picture</button>
-                    <button class="change-camera hidden">Switch camera</button>
-                </div>
-            </div>
+            <button class="show-gallery-button">Show Gallery</button>
+            <button class="show-camera-button">Take a photo</button>
+        </section>
 
-            <div class="picture hidden">
-                <img src="" alt="Picture taken" class="picture-taken">
-                <div>
-                    <h3>Want to save picture to the gallery?</h3>
-                    <button id="yesButton">Yes</button>
-                    <button id="noButton">No</button>
-                </div>
+        <section class="camera hidden">
+            <h2>Take a picture</h2>
+            <p class="error-message"></p>
+            <video src="" autoplay poster="" controls></video>
+            <div>
+                <button class="camera-on">Camera On</button>
+                <button class="camera-off hidden">Camera Off</button>
+                <button class="take-picture hidden">Take picture</button>
+                <button class="change-camera hidden">Switch camera</button>
             </div>
         </section>
 
-        
-
-
-        <section>
-            <div class="the-gallery">
-                <h2>The gallery</h2>
+        <section class="picture hidden">
+            <img src="" alt="Picture taken" class="picture-taken">
+            <div>
+                <h3>Want to save picture to the gallery?</h3>
+                <button id="yesButton">Yes</button>
+                <button id="noButton">No</button>
             </div>
+        </section>
+
+        <section class="the-gallery hidden">
+            <h2>The gallery</h2>
         </section>
     </main>
 

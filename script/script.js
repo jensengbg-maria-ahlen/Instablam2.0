@@ -10,6 +10,32 @@ if ('serviceWorker' in navigator) {
 
 
 window.addEventListener('load', () => {
+    const showGalleryButton = document.querySelector('.show-gallery-button');
+    const showCameraButton = document.querySelector('.show-camera-button');
+    let cameraSection = document.querySelector('.camera');
+    let gallerySection = document.querySelector('.the-gallery');
+
+    showCameraButton.addEventListener('click', () => {
+        cameraSection.classList.remove('hidden');
+
+        if (gallerySection.classList !== 'hidden') {
+            gallerySection.classList.add('hidden');
+        } else {
+            gallerySection.classList.remove('hidden');
+        }
+    });
+
+    showGalleryButton.addEventListener('click', () => {
+        gallerySection.classList.remove('hidden');
+        
+        if (cameraSection.classList !== 'hidden') {
+            cameraSection.classList.add('hidden');
+        } else {
+            cameraSection.classList.remove('hidden');
+        }
+    });
+
+
     if ('mediaDevices' in navigator) {
         cameraSettings();
     }
@@ -18,42 +44,10 @@ window.addEventListener('load', () => {
         locationSettings();
     }
 
-    notificationSettings();
-
+    ///notificationSettings();
     gallerySettings();
 });
 
-
-function gallerySettings() {
-    const galleryImg = document.querySelector('.the-gallery');
-    let allImg = ['forest.jpg', 'ocean.jpg', 'turtle.jpg']
-    galleryImg.innerHTML = '';
- 
-    for(image of allImg) {
-        let theImage = document.createElement('div');
-        theImage.classList.add('image')
-        theImage.innerHTML += 
-            '<img src="img/' + image+ '" alt="Picture in gallery" class="gallery-Images">' +
-            '<p class="location">Photographed at ' + image.city + ', ' + image.country + '.</p>';
-        
-        let downloadLink = document.createElement('a');
-        downloadLink.addEventListener('click', () => {
-            downloadLink.href = galleryImg.src;
-            downloadLink.download = downloadLink.href;
-        })    
-
-        let deleteButton = document.createElement('button');
-        deleteButton.classList.add('delete-button');
-        deleteButton.innerHTML = 'Delete'
-        deleteButton.addEventListener('click', () => {
-            console.log('image', image);
-        })
-        
-        theImage.appendChild(downloadLink);
-        theImage.appendChild(deleteButton);
-        galleryImg.append(theImage);
-    }    
-}
 
 
 
@@ -61,11 +55,13 @@ function gallerySettings() {
 function cameraSettings(position) {
     const cameraOnButton = document.querySelector('.camera-on');
     const cameraOffButton = document.querySelector('.camera-off')
-    const takePictureButton = document.querySelector('#take-picture');
+    const takePictureButton = document.querySelector('.take-picture');
     const changeCameraButton = document.querySelector('.change-camera')
+    
     const errorMessage = document.querySelector('.error-message');
     const video = document.querySelector('video');
-    const pictureTaken = document.querySelector('.picture-taken');
+    const pictureTaken = document.querySelector('.picture-taken')
+
     let stream;
     let facingMode = 'environment';
 
@@ -77,10 +73,12 @@ function cameraSettings(position) {
                 video: { width: 320, height: 320, facingMode: facingMode }
             })
             video.srcObject = stream;
-            takePictureButton.disabled = false;
+            
+            takePictureButton.classList.remove('hidden');
             changeCameraButton.classList.remove('hidden');
             cameraOnButton.classList.add('hidden');
             cameraOffButton.classList.remove('hidden');
+
         } catch (e) {
             errorMessage.innerHTML = 'Please allow the app to access camera'
         }
@@ -94,7 +92,8 @@ function cameraSettings(position) {
         }
         let tracks = stream.getTracks();
         tracks.forEach(track => track.stop());
-        takePictureButton.disabled = true;
+        
+        takePictureButton.classList.add('hidden');
         changeCameraButton.classList.add('hidden');
         cameraOnButton.classList.remove('hidden');
         cameraOffButton.classList.add('hidden');
@@ -114,11 +113,9 @@ function cameraSettings(position) {
         
         let imgUrl = URL.createObjectURL(blob);
         pictureTaken.src = imgUrl;
-        
-        let divElem = document.querySelector('.picture');
-        divElem.classList.remove('hidden');
+        console.log(pictureTaken.src);
 
-        notificationSettings(pictureTaken);
+        //notificationSettings(pictureTaken);
         addImage(pictureTaken.src, position)
     })
 
@@ -162,6 +159,7 @@ async function getAdressFromPosition(lat, lng) {
     }
 }
 
+/*
 async function notificationSettings(image) {
     let notificationPermission = false;
     const errorMessage = document.querySelector('.error-message')
@@ -188,7 +186,7 @@ async function notificationSettings(image) {
     navigator.serviceWorker.ready.then(reg => 
         reg.showNotification('Image', options));
 }
-
+*/
 
 function addImage(image, position) {
     const yesButton = document.querySelector('.yesButton');
@@ -209,4 +207,48 @@ function addImage(image, position) {
     noButton.addEventListener('click', () => {
         console.log('Nobutton')
     })
+}
+
+
+
+
+function gallerySettings() {
+    const galleryImg = document.querySelector('.the-gallery');
+    let allImg = ['forest.jpg', 'ocean.jpg', 'turtle.jpg'];
+ 
+    for(image of allImg) {
+        let theImage = document.createElement('div');
+        theImage.classList.add('image');
+        let url = image;
+       
+        theImage.innerHTML += 
+        '<img src="img/' + url + '" alt="Picture in gallery" class="gallery-images">' +
+        '<p class="location">Photographed at ' + image.city + ', ' + image.country + '.</p>';
+    
+
+        //To download the image
+        let downloadLink = document.createElement('a');
+        downloadLink.setAttribute('download', url);
+        
+        downloadLink.innerHTML = 'Download';
+        downloadLink.href = 'img/' + url;
+
+        downloadLink.addEventListener('click', () => {
+            downloadLink.download = downloadLink.href;
+        })  
+
+        //To delete selected image
+        let deleteButton = document.createElement('button');
+        deleteButton.classList.add('delete-button');
+        deleteButton.innerHTML = 'Delete';
+
+        deleteButton.addEventListener('click', () => {
+            console.log('delete', url);
+        }) 
+
+
+        theImage.appendChild(downloadLink);
+        theImage.appendChild(deleteButton);
+        galleryImg.append(theImage);
+    }    
 }
