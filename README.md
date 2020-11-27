@@ -13,12 +13,12 @@ Hope you will enjoy the app.
 |Browser      |Able to download |Geolocation |MediaDevices |Notification |Offline |Push |
 |----------------|--------|--------|-|-|-|-|
 |Desktop Chrome  |✔️|✔️|✔️|✔️|❔|❔|
-|Mobil Chrome    |✔️|✔️|✔️|⛔|❔|❔|
 |Desktop Firefox |⛔|✔️|⛔|✔️|❔|❔|
-|Mobil   Firefox |✔️|✔️|✔️|⛔|❔|❔|
 |Desktop Safari  |❔|❔|❔|❔|❔|❔|❔|
-|Mobil   Safari  |✔️|✔️|✔️|⛔|❔|❔|
 |Desktop Edge    |✔️|✔️|✔️|✔️|❔|❔|
+|Mobil Chrome    |✔️|✔️|✔️|⛔|❔|❔|
+|Mobil   Firefox |✔️|✔️|✔️|⛔|❔|❔|
+|Mobil   Safari  |✔️|✔️|✔️|⛔|❔|❔|
 |Mobil   Edge    |✔️(?)|✔️|✔️|⛔|❔|❔|
 
 
