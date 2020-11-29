@@ -12,14 +12,14 @@ Hope you will enjoy the app.
 ## Testing in browsers
 |Browser      |Able to download |Geolocation |MediaDevices |Notification |Offline |Push |
 |----------------|--------|--------|-|-|-|-|
-|Desktop Chrome  |✔️|✔️|✔️|✔️|Inte testat|Inte testat|
-|Mobil Chrome    |✔️|✔️|✔️|⛔|Inte testat|Inte testat|
-|Desktop Firefox |⛔|✔️|⛔|✔️|Inte testat|Inte testat|
-|Mobil   Firefox |✔️|✔️|✔️|⛔|Inte testat|Inte testat|
+|Desktop Chrome  |✔️|✔️|✔️|✔️|❔|❔|
+|Desktop Firefox |⛔|✔️|⛔|✔️|❔|❔|
 |Desktop Safari  |❔|❔|❔|❔|❔|❔|❔|
-|Mobil   Safari  |✔️|✔️|✔️|⛔|Inte testat|Inte testat|
-|Desktop Edge    |✔️|✔️|✔️|✔️|Inte testat|Inte testat|
-|Mobil   Edge    |✔️|✔️|✔️|⛔|Inte testat|Inte testat|
+|Desktop Edge    |✔️|✔️|✔️|✔️|❔|❔|
+|Mobil Chrome    |✔️|✔️|✔️|⛔|❔|❔|
+|Mobil   Firefox |✔️|✔️|✔️|⛔|❔|❔|
+|Mobil   Safari  |✔️|✔️|✔️|⛔|❔|❔|
+|Mobil   Edge    |✔️(?)|✔️|✔️|⛔|❔|❔|
 
 
 
@@ -28,7 +28,7 @@ Hope you will enjoy the app.
 |-|-|
 |Fast and reliable | 3 / 3 |
 |Installable | 3 / 3 |
-|PWA Optimized | 7 / 8 |
+|PWA Optimized | 8 / 8 |
 
 
 
