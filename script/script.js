@@ -233,7 +233,7 @@ function addImage(image, city, country) {
 }
 
 
-
+//gallery with previous pictures
 function gallerySettings() {
     const galleryImg = document.querySelector('.gallerySection');
     galleryImg.innerHTML = '';
@@ -243,18 +243,18 @@ function gallerySettings() {
             imgUrl: 'forest.jpg',
             city: 'State of Amazonas',
             country: 'Brazil',
-            time: '2017-10-20'
+            time: '2017-10-05'
         },
         {
             imgUrl: 'ocean.jpg',
             city: 'Tasman Sea',
             country: '',
-            time: '2018-07-18' 
+            time: '2017-12-08'
         }, {
             imgUrl: 'turtle.jpg',
             city: 'Indian Ocean',
             country: '',
-            time: '2018-06-04'  
+            time: '2017-11-20'
         }];
 
     for(image of allImg) {
@@ -265,7 +265,7 @@ function gallerySettings() {
         theImage.innerHTML += 
         '<h2>The gallery</h2>'+
         '<img src="img/' + image.imgUrl + '" alt="Picture in gallery" class="gallery-images">' +
-        '<p class="location">Photographed at '+ image.time + + image.city + ', ' + image.country + '.</p>';
+        '<p class="location">Photographed at '+ image.time + ', ' + image.city + ', ' + image.country + '.</p>';
     
 
         //To download the image
@@ -296,7 +296,7 @@ function gallerySettings() {
 }
 
 
-//Add and show the new image in the gallery
+//Adding and showing the new image in the gallery
 function addToGallery(img) {
     const galleryImg = document.querySelector('.gallerySection');
     let newImages = [];
@@ -309,7 +309,7 @@ function addToGallery(img) {
        
         theImage.innerHTML += 
         '<img src="img/' + image.imgUrl + '" alt="Picture in gallery" class="gallery-images">' +
-        '<p class="location">Photographed at '+ image.time + + image.city + ', ' + image.country + '.</p>';
+        '<p class="location">Photographed at '+ image.time + ', ' + image.city + ', ' + image.country + '.</p>';
     
 
         //To download the image
