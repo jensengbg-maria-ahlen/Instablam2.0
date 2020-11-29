@@ -14,6 +14,7 @@ window.addEventListener('load', () => {
     const showCameraButton = document.querySelector('.show-camera-button');
     let cameraSection = document.querySelector('.camera');
     let gallerySection = document.querySelector('.the-gallery');
+    let picture = document.querySelector('.picture');
 
     showCameraButton.addEventListener('click', () => {
         cameraSection.classList.remove('hidden');
@@ -27,7 +28,8 @@ window.addEventListener('load', () => {
 
     showGalleryButton.addEventListener('click', () => {
         gallerySection.classList.remove('hidden');
-        
+        picture.classList.add('hidden');
+
         if (cameraSection.classList !== 'hidden') {
             cameraSection.classList.add('hidden');
         } else {
@@ -43,16 +45,13 @@ window.addEventListener('load', () => {
     if ('geolocation' in navigator) {
         locationSettings();
     }
-
-    ///notificationSettings();
-    gallerySettings();
 });
 
 
 
 
 
-function cameraSettings(position) {
+function cameraSettings(city, country) {
     const cameraOnButton = document.querySelector('.camera-on');
     const cameraOffButton = document.querySelector('.camera-off')
     const takePictureButton = document.querySelector('.take-picture');
@@ -113,10 +112,12 @@ function cameraSettings(position) {
         
         let imgUrl = URL.createObjectURL(blob);
         pictureTaken.src = imgUrl;
-        console.log(pictureTaken.src);
+        
+        let imgSection = document.querySelector('.picture');
+        imgSection.classList.remove('hidden');
 
-        //notificationSettings(pictureTaken);
-        addImage(pictureTaken.src, position)
+        notificationSettings(pictureTaken);
+        addImage(pictureTaken, city, country)
     })
 
     changeCameraButton.addEventListener('click', () => {
@@ -133,6 +134,7 @@ function cameraSettings(position) {
 
 
 function locationSettings() {
+    let errorMessage = document.querySelector('.error-message');
     try {
         const geo = navigator.geolocation;
         geo.getCurrentPosition(pos => {
@@ -140,26 +142,31 @@ function locationSettings() {
             let lng = pos.coords.longitude;
             getAdressFromPosition(lat, lng);
         }, error => {
-            console.log(error);
+            console.log('locationSettings error: ', error);
         });
     } catch (e) {
-        console.log('This device does not have access to the Geolocation API.');
+        errorMessage.innerHTML = 'This device does not have access to the Geolocation API.';
     }
 }
 
 
 async function getAdressFromPosition(lat, lng) {
+    const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=b756363ff58242588fc1d3ba17062641`;
     try {
-        const response = await fetch(`https://geocode.xyz/${lat},${lng}?json=1`);
+        const response = await fetch(url);
         const data = await response.json();
-        cameraSettings(data)
+        
+        const city = data.results[0].components.city_district;
+        const country = data.results[0].components.country;
+        
+        cameraSettings(city, country);
 
     } catch (e) {
-        console.log(e)
+        console.log('getAdressFromPosition error: ', e)
     }
 }
 
-/*
+
 async function notificationSettings(image) {
     let notificationPermission = false;
     const errorMessage = document.querySelector('.error-message')
@@ -186,44 +193,76 @@ async function notificationSettings(image) {
     navigator.serviceWorker.ready.then(reg => 
         reg.showNotification('Image', options));
 }
-*/
 
-function addImage(image, position) {
+
+
+
+function addImage(image, city, country) {
     const yesButton = document.querySelector('.yesButton');
     const noButton = document.querySelector('.noButton');
+    let info = document.querySelector('#position');
+    let added = document.querySelector('.info')
+    let divElem = document.querySelector('.picture');
+    let date = new Date().toISOString().slice(0,10);
 
     let img = {
-        imgUrl: image,
-        city: position.city,
-        country: position.country
+        imgUrl: image.src,
+        city: city,
+        country: country,
+        date: date
     }
 
+    info.innerHTML = `The picture was taken at ${img.city}, ${img.country}.`
 
     yesButton.addEventListener('click', () => {
-        console.log('YesButton');
+        gallerySettings(img);
+        added.innerHTML = 'Image added to the gallery';
     })
 
 
     noButton.addEventListener('click', () => {
-        console.log('Nobutton')
+        img.imgUrl = "";
+        divElem.classList.add('hidden');
     })
 }
 
 
 
-
-function gallerySettings() {
+function gallerySettings(img) {
     const galleryImg = document.querySelector('.the-gallery');
-    let allImg = ['forest.jpg', 'ocean.jpg', 'turtle.jpg'];
+    galleryImg.innerHTML = '';
+
+    let allImg = [ 
+        {
+            imgUrl: 'forest.jpg',
+            city: img.city,
+            country: img.country,
+            time: img.date
+        },
+        {
+            imgUrl: 'ocean.jpg',
+            city: img.city,
+            country: img.country,
+            time: img.date   
+        }, {
+            imgUrl: 'turtle.jpg',
+            city: img.city,
+            country: img.country,
+            time: img.date  
+        }];
  
+    //allImg.push(img);
+
+
     for(image of allImg) {
         let theImage = document.createElement('div');
         theImage.classList.add('image');
-        let url = image;
+        let url = image.imgUrl;
        
         theImage.innerHTML += 
-        '<img src="img/' + url + '" alt="Picture in gallery" class="gallery-images">' +
-        '<p class="location">Photographed at ' + image.city + ', ' + image.country + '.</p>';
+        '<h2>The gallery</h2>'+
+        '<img src="img/' + image.imgUrl + '" alt="Picture in gallery" class="gallery-images">' +
+        '<p class="location">Photographed at '+ image.time + + image.city + ', ' + image.country + '.</p>';
     
 
         //To download the image
@@ -235,7 +274,7 @@ function gallerySettings() {
 
         downloadLink.addEventListener('click', () => {
             downloadLink.download = downloadLink.href;
-        })  
+        });  
 
         //To delete selected image
         let deleteButton = document.createElement('button');
@@ -244,7 +283,7 @@ function gallerySettings() {
 
         deleteButton.addEventListener('click', () => {
             console.log('delete', url);
-        }) 
+        });
 
 
         theImage.appendChild(downloadLink);
