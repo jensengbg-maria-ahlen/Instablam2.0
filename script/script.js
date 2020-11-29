@@ -12,9 +12,9 @@ if ('serviceWorker' in navigator) {
 window.addEventListener('load', () => {
     const showGalleryButton = document.querySelector('.show-gallery-button');
     const showCameraButton = document.querySelector('.show-camera-button');
-    let cameraSection = document.querySelector('.camera');
-    let gallerySection = document.querySelector('.the-gallery');
-    let picture = document.querySelector('.picture');
+    let cameraSection = document.querySelector('.cameraSection');
+    let gallerySection = document.querySelector('.gallerySection');
+    let picture = document.querySelector('.pictureSection');
 
     showCameraButton.addEventListener('click', () => {
         cameraSection.classList.remove('hidden');
@@ -37,102 +37,22 @@ window.addEventListener('load', () => {
         }
     });
 
+    if ('geolocation' in navigator) {
+        locationSettings();
+    }
+
 
     if ('mediaDevices' in navigator) {
         cameraSettings();
     }
 
-    if ('geolocation' in navigator) {
-        locationSettings();
-    }
+
+    gallerySettings();
 });
 
 
 
-
-
-function cameraSettings(city, country) {
-    const cameraOnButton = document.querySelector('.camera-on');
-    const cameraOffButton = document.querySelector('.camera-off')
-    const takePictureButton = document.querySelector('.take-picture');
-    const changeCameraButton = document.querySelector('.change-camera')
-    
-    const errorMessage = document.querySelector('.error-message');
-    const video = document.querySelector('video');
-    const pictureTaken = document.querySelector('.picture-taken')
-
-    let stream;
-    let facingMode = 'environment';
-
-    cameraOnButton.addEventListener('click', async () => {
-        errorMessage.innerHTML = '';
-        try {
-            const md = navigator.mediaDevices;
-            stream = await md.getUserMedia({
-                video: { width: 320, height: 320, facingMode: facingMode }
-            })
-            video.srcObject = stream;
-            
-            takePictureButton.classList.remove('hidden');
-            changeCameraButton.classList.remove('hidden');
-            cameraOnButton.classList.add('hidden');
-            cameraOffButton.classList.remove('hidden');
-
-        } catch (e) {
-            errorMessage.innerHTML = 'Please allow the app to access camera'
-        }
-    })
-
-    cameraOffButton.addEventListener('click', async () => {
-        errorMessage.innerHTML = '';
-        if (!stream) {
-            errorMessage.innerHTML = 'No video to stop.';
-            return;
-        }
-        let tracks = stream.getTracks();
-        tracks.forEach(track => track.stop());
-        
-        takePictureButton.classList.add('hidden');
-        changeCameraButton.classList.add('hidden');
-        cameraOnButton.classList.remove('hidden');
-        cameraOffButton.classList.add('hidden');
-    })
-
-    takePictureButton.addEventListener('click', async () => {
-        errorMessage.innerHTML = '';
-        if (!stream) {
-            errorMessage.innerHTML = 'No video to take photo from.';
-            return;
-        }
-        let tracks = stream.getTracks();
-        let videoTrack = tracks[0];
-        
-        let capture = new ImageCapture(videoTrack);
-        let blob = await capture.takePhoto();
-        
-        let imgUrl = URL.createObjectURL(blob);
-        pictureTaken.src = imgUrl;
-        
-        let imgSection = document.querySelector('.picture');
-        imgSection.classList.remove('hidden');
-
-        notificationSettings(pictureTaken);
-        addImage(pictureTaken, city, country)
-    })
-
-    changeCameraButton.addEventListener('click', () => {
-        if (facingMode == 'environment') {
-            facingMode = 'user';
-        } else {
-            facingMode = 'environment';
-        }
-        cameraOffButton.click();
-        cameraOnButton.click();
-    })
-}
-
-
-
+//Geolocation
 function locationSettings() {
     let errorMessage = document.querySelector('.error-message');
     try {
@@ -148,7 +68,6 @@ function locationSettings() {
         errorMessage.innerHTML = 'This device does not have access to the Geolocation API.';
     }
 }
-
 
 async function getAdressFromPosition(lat, lng) {
     const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=b756363ff58242588fc1d3ba17062641`;
@@ -167,6 +86,9 @@ async function getAdressFromPosition(lat, lng) {
 }
 
 
+
+
+//Notifications
 async function notificationSettings(image) {
     let notificationPermission = false;
     const errorMessage = document.querySelector('.error-message')
@@ -197,12 +119,97 @@ async function notificationSettings(image) {
 
 
 
+//MediaDevices
+function cameraSettings(city, country) {
+    const cameraOnButton = document.querySelector('.camera-on');
+    const cameraOffButton = document.querySelector('.camera-off')
+    const takePictureButton = document.querySelector('.take-picture');
+    const changeCameraButton = document.querySelector('.change-camera')
+    
+    const errorMessage = document.querySelector('.error-message');
+    const video = document.querySelector('video');
+    const pictureImage = document.querySelector('.picture-taken')
+
+    let stream;
+    let facingMode = 'environment';
+
+    cameraOnButton.addEventListener('click', async () => {
+        errorMessage.innerHTML = '';
+        try {
+            const md = navigator.mediaDevices;
+            stream = await md.getUserMedia({
+                video: { width: 320, height: 320, facingMode: facingMode }
+            })
+            video.srcObject = stream;
+            
+            takePictureButton.classList.remove('hidden');
+            changeCameraButton.classList.remove('hidden');
+            cameraOnButton.classList.add('hidden');
+            cameraOffButton.classList.remove('hidden');
+
+        } catch (e) {
+            errorMessage.innerHTML = 'Please allow the app to access camera'
+        }
+    });
+
+
+    cameraOffButton.addEventListener('click', async () => {
+        errorMessage.innerHTML = '';
+        if (!stream) {
+            errorMessage.innerHTML = 'No video to stop.';
+            return;
+        }
+        let tracks = stream.getTracks();
+        tracks.forEach(track => track.stop());
+        
+        takePictureButton.classList.add('hidden');
+        changeCameraButton.classList.add('hidden');
+        cameraOnButton.classList.remove('hidden');
+        cameraOffButton.classList.add('hidden');
+    });
+
+
+    changeCameraButton.addEventListener('click', () => {
+        if (facingMode == 'environment') {
+            facingMode = 'user';
+        } else {
+            facingMode = 'environment';
+        }
+        cameraOffButton.click();
+        cameraOnButton.click();
+    });
+
+
+    takePictureButton.addEventListener('click', async () => {
+        errorMessage.innerHTML = '';
+        if (!stream) {
+            errorMessage.innerHTML = 'No video to take photo from.';
+            return;
+        }
+        let tracks = stream.getTracks();
+        let videoTrack = tracks[0];
+        
+        let capture = new ImageCapture(videoTrack);
+        let blob = await capture.takePhoto();
+        
+        let imgUrl = URL.createObjectURL(blob);
+        pictureImage.src = imgUrl;
+        
+        let imgSection = document.querySelector('.pictureSection');
+        imgSection.classList.remove('hidden');
+
+        notificationSettings(pictureImage);
+        addImage(pictureImage, city, country);
+    });
+}
+
+
+//To choose if adding the picture to gallery or not
 function addImage(image, city, country) {
     const yesButton = document.querySelector('.yesButton');
     const noButton = document.querySelector('.noButton');
-    let info = document.querySelector('#position');
     let added = document.querySelector('.info')
-    let divElem = document.querySelector('.picture');
+    let divElem = document.querySelector('.pictureSection');
     let date = new Date().toISOString().slice(0,10);
 
     let img = {
@@ -212,11 +219,10 @@ function addImage(image, city, country) {
         date: date
     }
 
-    info.innerHTML = `The picture was taken at ${img.city}, ${img.country}.`
-
     yesButton.addEventListener('click', () => {
-        gallerySettings(img);
+        addToGallery(img);
         added.innerHTML = 'Image added to the gallery';
+        img.imgUrl = "";
     })
 
 
@@ -228,31 +234,28 @@ function addImage(image, city, country) {
 
 
 
-function gallerySettings(img) {
-    const galleryImg = document.querySelector('.the-gallery');
+function gallerySettings() {
+    const galleryImg = document.querySelector('.gallerySection');
     galleryImg.innerHTML = '';
 
     let allImg = [ 
         {
             imgUrl: 'forest.jpg',
-            city: img.city,
-            country: img.country,
-            time: img.date
+            city: 'State of Amazonas',
+            country: 'Brazil',
+            time: '2017-10-20'
         },
         {
             imgUrl: 'ocean.jpg',
-            city: img.city,
-            country: img.country,
-            time: img.date   
+            city: 'Tasman Sea',
+            country: '',
+            time: '2018-07-18' 
         }, {
             imgUrl: 'turtle.jpg',
-            city: img.city,
-            country: img.country,
-            time: img.date  
+            city: 'Indian Ocean',
+            country: '',
+            time: '2018-06-04'  
         }];
- 
-    //allImg.push(img);
-
 
     for(image of allImg) {
         let theImage = document.createElement('div');
@@ -290,4 +293,48 @@ function gallerySettings(img) {
         theImage.appendChild(deleteButton);
         galleryImg.append(theImage);
     }    
+}
+
+
+//Add and show the new image in the gallery
+function addToGallery(img) {
+    const galleryImg = document.querySelector('.gallerySection');
+    let newImages = [];
+    newImages.push(img);
+
+    for(image of newImages){
+        let theImage = document.createElement('div');
+        theImage.classList.add('image');
+        let url = image.imgUrl;
+       
+        theImage.innerHTML += 
+        '<img src="img/' + image.imgUrl + '" alt="Picture in gallery" class="gallery-images">' +
+        '<p class="location">Photographed at '+ image.time + + image.city + ', ' + image.country + '.</p>';
+    
+
+        //To download the image
+        let downloadLink = document.createElement('a');
+        downloadLink.setAttribute('download', url);
+        
+        downloadLink.innerHTML = 'Download';
+        downloadLink.href = url;
+
+        downloadLink.addEventListener('click', () => {
+            downloadLink.download = downloadLink.href;
+        });  
+
+        //To delete selected image
+        let deleteButton = document.createElement('button');
+        deleteButton.classList.add('delete-button');
+        deleteButton.innerHTML = 'Delete';
+
+        deleteButton.addEventListener('click', () => {
+            console.log('delete', url);
+        });
+
+
+        theImage.appendChild(downloadLink);
+        theImage.appendChild(deleteButton);
+        galleryImg.append(theImage);
+    }     
 }
