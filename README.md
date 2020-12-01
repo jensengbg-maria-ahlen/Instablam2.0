@@ -10,16 +10,16 @@ Hope you will enjoy the app.
 
 
 ## Testing in browsers
-|Browser      |Able to download |Geolocation |MediaDevices |Notification |Offline |Push |
-|----------------|--------|--------|-|-|-|-|
-|Desktop Chrome  |✔️|✔️|✔️|✔️|❔|❔|
-|Desktop Firefox |⛔|✔️|⛔|✔️|❔|❔|
-|Desktop Safari  |❔|❔|❔|❔|❔|❔|❔|
-|Desktop Edge    |✔️|✔️|✔️|✔️|❔|❔|
-|Mobil Chrome    |✔️|✔️|✔️|⛔|❔|❔|
-|Mobil   Firefox |✔️|✔️|✔️|⛔|❔|❔|
-|Mobil   Safari  |✔️|✔️|✔️|⛔|❔|❔|
-|Mobil   Edge    |✔️(?)|✔️|✔️|⛔|❔|❔|
+|Browser      |Able to download |Geolocation |MediaDevices |Notification |Offline |
+|----------------|--------|--------|-|-|-|
+|Desktop Chrome  |✔️|✔️|✔️|✔️|❔|
+|Desktop Firefox |⛔|❔|⛔|✔️|❔|
+|Desktop Safari  |❔|❔|❔|❔|❔|❔|
+|Desktop Edge    |✔️|✔️|✔️|✔️|❔|
+|Mobil Chrome    |✔️|✔️|✔️|✔️|❔|
+|Mobil   Firefox |✔️|⛔|⛔|⛔|❔|
+|Mobil   Safari  |✔️|⛔|⛔|⛔|❔|
+|Mobil   Edge    |✔️|✔️|✔️|✔️|❔|
 
 
 
