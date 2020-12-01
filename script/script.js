@@ -139,6 +139,7 @@ function cameraSettings() {
 
     allowLocationButton.addEventListener('click', async () => {
         await getPosition();
+        allowLocationButton.classList.add('hidden');
     });
 
 
@@ -211,7 +212,7 @@ function cameraSettings() {
         imgSection.classList.remove('hidden');
 
         notificationSettings(pictureImage);
-        addImage(pictureImage, city, country);
+        addImage(pictureImage.src, city, country);
     });
 }
 
@@ -223,27 +224,28 @@ function addImage(image, city, country) {
     let added = document.querySelector('.info')
     let divElem = document.querySelector('.pictureSection');
     let date = new Date().toISOString().slice(0,10);
-    console.log(date);
 
     let img = {
-        imgUrl: image.src,
+        imgUrl: image,
         city: city,
         country: country,
         date: date
     }
-    console.log(img);
+
 
     yesButton.addEventListener('click', () => {
-        addToGallery(img);
-        added.innerHTML = 'Image added to the gallery';
+        if (img.imgUrl !== "") {
+            addToGallery(img);
+            added.innerHTML = 'Image added to the gallery';
+        }
         img.imgUrl = "";
     })
-
 
     noButton.addEventListener('click', () => {
         img.imgUrl = "";
         divElem.classList.add('hidden');
     })
+    
 }
 
 
@@ -252,7 +254,7 @@ function gallerySettings() {
     const galleryImg = document.querySelector('.gallerySection');
     galleryImg.innerHTML = '';
 
-    let allImg = [ 
+    let currentImg = [ 
         {
             imgUrl: 'forest.jpg',
             city: 'State of Amazonas',
@@ -271,7 +273,7 @@ function gallerySettings() {
             time: '2017-11-20'
         }];
 
-    for(image of allImg) {
+    for(image of currentImg) {
         let theImage = document.createElement('div');
         theImage.classList.add('image');
         let url = image.imgUrl;
@@ -322,8 +324,8 @@ function addToGallery(img) {
         let url = image.imgUrl;
        
         theImage.innerHTML += 
-        '<img src="img/' + image.imgUrl + '" alt="Picture in gallery" class="gallery-images">' +
-        '<p class="location">Photographed at '+ image.time + ', ' + image.city + ', ' + image.country + '.</p>';
+        '<img src="' + image.imgUrl + '" alt="Picture in gallery" class="gallery-images">' +
+        '<p class="location">Photographed at '+ image.date + ', ' + image.city + ', ' + image.country + '.</p>';
     
 
         //To download the image
