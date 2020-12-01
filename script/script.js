@@ -37,15 +37,10 @@ window.addEventListener('load', () => {
         }
     });
 
-    if ('geolocation' in navigator) {
-        locationSettings();
-    }
-
-
+    
     if ('mediaDevices' in navigator) {
         cameraSettings();
     }
-
 
     gallerySettings();
 });
@@ -53,19 +48,22 @@ window.addEventListener('load', () => {
 
 
 //Geolocation
-function locationSettings() {
+function getPosition() {
     let errorMessage = document.querySelector('.error-message');
-    try {
-        const geo = navigator.geolocation;
-        geo.getCurrentPosition(pos => {
-            let lat = pos.coords.latitude;
-            let lng = pos.coords.longitude;
-            getAdressFromPosition(lat, lng);
-        }, error => {
-            console.log('locationSettings error: ', error);
-        });
-    } catch (e) {
-        errorMessage.innerHTML = 'This device does not have access to the Geolocation API.';
+
+    if ('geolocation' in navigator) {    
+        try {
+            const geo = navigator.geolocation;
+            geo.getCurrentPosition(pos => {
+                let lat = pos.coords.latitude;
+                let lng = pos.coords.longitude;
+                getAdressFromPosition(lat, lng);
+            }, error => {
+                console.log('locationSettings error: ', error);
+            });
+        } catch (e) {
+            errorMessage.innerHTML = 'This device does not have access to the Geolocation API.';
+        }
     }
 }
 
@@ -77,8 +75,7 @@ async function getAdressFromPosition(lat, lng) {
         
         const city = data.results[0].components.city_district;
         const country = data.results[0].components.country;
-        
-        cameraSettings(city, country);
+        console.log(city, country);
 
     } catch (e) {
         console.log('getAdressFromPosition error: ', e)
@@ -120,18 +117,28 @@ async function notificationSettings(image) {
 
 
 //MediaDevices
-function cameraSettings(city, country) {
+function cameraSettings() {
     const cameraOnButton = document.querySelector('.camera-on');
     const cameraOffButton = document.querySelector('.camera-off')
     const takePictureButton = document.querySelector('.take-picture');
-    const changeCameraButton = document.querySelector('.change-camera')
-    
+    const changeCameraButton = document.querySelector('.change-camera');
+    const allowLocationButton = document.querySelector('.allow-location');
+
+    const video = document.querySelector('.video');
     const errorMessage = document.querySelector('.error-message');
-    const video = document.querySelector('video');
-    const pictureImage = document.querySelector('.picture-taken')
+    const pictureImage = document.querySelector('.picture-taken');
 
     let stream;
     let facingMode = 'environment';
+
+
+    allowLocationButton.addEventListener('click', async () => {
+        console.log('Hej');
+        await getPosition();
+        //allowLocationButton.classList.add('hidden');
+    })
+
+
 
     cameraOnButton.addEventListener('click', async () => {
         errorMessage.innerHTML = '';
@@ -140,8 +147,10 @@ function cameraSettings(city, country) {
             stream = await md.getUserMedia({
                 video: { width: 320, height: 320, facingMode: facingMode }
             })
-            video.srcObject = stream;
             
+            video.srcObject = stream;
+            console.log(video.srcObject)
+
             takePictureButton.classList.remove('hidden');
             changeCameraButton.classList.remove('hidden');
             cameraOnButton.classList.add('hidden');
@@ -187,11 +196,10 @@ function cameraSettings(city, country) {
             return;
         }
         let tracks = stream.getTracks();
-        let videoTrack = tracks[0];
-        
-        let capture = new ImageCapture(videoTrack);
+        let imgTrack = tracks[0]; 
+        let capture = new ImageCapture(imgTrack);
         let blob = await capture.takePhoto();
-        
+    
         let imgUrl = URL.createObjectURL(blob);
         pictureImage.src = imgUrl;
         
@@ -285,7 +293,7 @@ function gallerySettings() {
         deleteButton.innerHTML = 'Delete';
 
         deleteButton.addEventListener('click', () => {
-            console.log('delete', url);
+            deleteButton.parentElement.remove();
         });
 
 
@@ -329,7 +337,7 @@ function addToGallery(img) {
         deleteButton.innerHTML = 'Delete';
 
         deleteButton.addEventListener('click', () => {
-            console.log('delete', url);
+            deleteButton.parentElement.remove();
         });
 
 
