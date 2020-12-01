@@ -75,11 +75,16 @@ async function getAdressFromPosition(lat, lng) {
         
         const city = data.results[0].components.city_district;
         const country = data.results[0].components.country;
-        console.log(city, country);
+        saveAdressInSessionStorage(city, country);
 
     } catch (e) {
         console.log('getAdressFromPosition error: ', e)
     }
+}
+
+function saveAdressInSessionStorage(city, country) {
+    sessionStorage.setItem('city', city);
+    sessionStorage.setItem('country', country);
 }
 
 
@@ -133,11 +138,8 @@ function cameraSettings() {
 
 
     allowLocationButton.addEventListener('click', async () => {
-        console.log('Hej');
         await getPosition();
-        //allowLocationButton.classList.add('hidden');
-    })
-
+    });
 
 
     cameraOnButton.addEventListener('click', async () => {
@@ -149,7 +151,6 @@ function cameraSettings() {
             })
             
             video.srcObject = stream;
-            console.log(video.srcObject)
 
             takePictureButton.classList.remove('hidden');
             changeCameraButton.classList.remove('hidden');
@@ -190,6 +191,9 @@ function cameraSettings() {
 
 
     takePictureButton.addEventListener('click', async () => {
+        let city = sessionStorage.getItem('city');
+        let country = sessionStorage.getItem('country');
+
         errorMessage.innerHTML = '';
         if (!stream) {
             errorMessage.innerHTML = 'No video to take photo from.';
@@ -219,6 +223,7 @@ function addImage(image, city, country) {
     let added = document.querySelector('.info')
     let divElem = document.querySelector('.pictureSection');
     let date = new Date().toISOString().slice(0,10);
+    console.log(date);
 
     let img = {
         imgUrl: image.src,
@@ -226,6 +231,7 @@ function addImage(image, city, country) {
         country: country,
         date: date
     }
+    console.log(img);
 
     yesButton.addEventListener('click', () => {
         addToGallery(img);
@@ -256,12 +262,12 @@ function gallerySettings() {
         {
             imgUrl: 'ocean.jpg',
             city: 'Tasman Sea',
-            country: '',
+            country: 'New Zealand',
             time: '2017-12-08'
         }, {
             imgUrl: 'turtle.jpg',
             city: 'Indian Ocean',
-            country: '',
+            country: 'Australia',
             time: '2017-11-20'
         }];
 
