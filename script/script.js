@@ -110,8 +110,8 @@ async function notificationSettings(image) {
     }
 
     const options = {
-        body: "This is your image",
-        icon: image.src
+        body: "Image added to gallery",
+        icon: image
     }
 
     navigator.serviceWorker.ready.then(reg => 
@@ -127,7 +127,6 @@ function cameraSettings() {
     const cameraOffButton = document.querySelector('.camera-off')
     const takePictureButton = document.querySelector('.take-picture');
     const changeCameraButton = document.querySelector('.change-camera');
-    const allowLocationButton = document.querySelector('.allow-location');
 
     const video = document.querySelector('.video');
     const errorMessage = document.querySelector('.error-message');
@@ -136,14 +135,8 @@ function cameraSettings() {
     let stream;
     let facingMode = 'environment';
 
-
-    allowLocationButton.addEventListener('click', async () => {
-        await getPosition();
-        allowLocationButton.classList.add('hidden');
-    });
-
-
     cameraOnButton.addEventListener('click', async () => {
+        getPosition();
         errorMessage.innerHTML = '';
         try {
             const md = navigator.mediaDevices;
@@ -211,7 +204,6 @@ function cameraSettings() {
         let imgSection = document.querySelector('.pictureSection');
         imgSection.classList.remove('hidden');
 
-        notificationSettings(pictureImage);
         addImage(pictureImage.src, city, country);
     });
 }
@@ -221,7 +213,6 @@ function cameraSettings() {
 function addImage(image, city, country) {
     const yesButton = document.querySelector('.yesButton');
     const noButton = document.querySelector('.noButton');
-    let added = document.querySelector('.info')
     let divElem = document.querySelector('.pictureSection');
     let date = new Date().toISOString().slice(0,10);
 
@@ -236,9 +227,10 @@ function addImage(image, city, country) {
     yesButton.addEventListener('click', () => {
         if (img.imgUrl !== "") {
             addToGallery(img);
-            added.innerHTML = 'Image added to the gallery';
+            notificationSettings(img.imgUrl);
+            divElem.classList.add('hidden');
+            img.imgUrl = "";
         }
-        img.imgUrl = "";
     })
 
     noButton.addEventListener('click', () => {
