@@ -64,7 +64,7 @@ function getPosition() {
         } catch (e) {
             errorMessage.innerHTML = 'This device does not have access to the Geolocation API.';
         }
-    }
+    } 
 }
 
 async function getAdressFromPosition(lat, lng) {
@@ -75,16 +75,16 @@ async function getAdressFromPosition(lat, lng) {
         
         const city = data.results[0].components.city_district;
         const country = data.results[0].components.country;
-        saveAdressInSessionStorage(city, country);
+        saveAdressInLocalStorage(city, country);
 
     } catch (e) {
         console.log('getAdressFromPosition error: ', e)
     }
 }
 
-function saveAdressInSessionStorage(city, country) {
-    sessionStorage.setItem('city', city);
-    sessionStorage.setItem('country', country);
+function saveAdressInLocalStorage(city, country) {
+    localStorage.setItem('city', city);
+    localStorage.setItem('country', country);
 }
 
 
@@ -185,8 +185,8 @@ function cameraSettings() {
 
 
     takePictureButton.addEventListener('click', async () => {
-        let city = sessionStorage.getItem('city');
-        let country = sessionStorage.getItem('country');
+        let city = localStorage.getItem('city');
+        let country = localStorage.getItem('country');
 
         errorMessage.innerHTML = '';
         if (!stream) {
@@ -271,14 +271,14 @@ function gallerySettings() {
         let url = image.imgUrl;
        
         theImage.innerHTML += 
-        '<h2>The gallery</h2>'+
-        '<img src="img/' + image.imgUrl + '" alt="Picture in gallery" class="gallery-images">' +
-        '<p class="location">Photographed at '+ image.time + ', ' + image.city + ', ' + image.country + '.</p>';
-    
+        `<h2>The gallery</h2>
+        <img src="img/${image.imgUrl}" alt="Picture in gallery" class="gallery-images">
+        <p class="location">Photographed at ${image.time}, ${image.city}, ${image.country}.</p>`;
 
         //To download the image
         let downloadLink = document.createElement('a');
         downloadLink.setAttribute('download', url);
+        downloadLink.classList.add('download-button')
         
         downloadLink.innerHTML = 'Download';
         downloadLink.href = 'img/' + url;
@@ -316,9 +316,8 @@ function createInGallery(img) {
         let url = image.imgUrl;
        
         theImage.innerHTML += 
-        '<img src="' + image.imgUrl + '" alt="Picture in gallery" class="gallery-images">' +
-        '<p class="location">Photographed at '+ image.date + ', ' + image.city + ', ' + image.country + '.</p>';
-    
+        `<img src="${image.imgUrl}" alt="Picture in gallery" class="gallery-images">
+        <p class="location">Photographed at ${image.date}, ${image.city}, ${image.country}.</p>`;
 
         //To download the image
         let downloadLink = document.createElement('a');

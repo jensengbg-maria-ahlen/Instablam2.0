@@ -5,25 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#86b881" />
-
     <title>Instablam</title>
-
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="/style/font-awesome/css/all.css">
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="shortcut icon" href="img/192.png" type="image/x-icon">
     <link rel="apple-touch-icon" href="img/192.png">
-
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap" rel="stylesheet">
     <script defer src="/script/script.js" charset="UTF-8"></script>
 </head>
 
 <body>
-    <main>
+    <main class="wrapper">
         <header>
             <h1>INSTABLAM</h1>
         </header>
 
-        <section>
+        <section class="showSection">
             <button class="show-gallery-button">Show Gallery</button>
             <button class="show-camera-button">Take a photo</button>
         </section>
@@ -32,8 +31,7 @@
             <h2>Take a picture</h2>
             <p class="error-message"></p>
             <video src="" autoplay poster="" controls width="320" height="320" class="video">
-            
-                </video>
+            </video>
             <div>
                 <button class="camera-on">Camera On</button>
                 <button class="camera-off hidden">Camera Off</button>
@@ -43,13 +41,14 @@
         </section>
 
         <section class="pictureSection hidden">
-            <img src="" alt="Picture taken" class="picture-taken">
-            <p id="position"></p>
             <div>
                 <h3 class="info">Want to save picture to the gallery?</h3>
                 <button class="yesButton">Yes</button>
                 <button class="noButton">No</button>
             </div>
+
+            <img src="" alt="Picture taken" class="picture-taken">
+            <p id="position"></p>
         </section>
 
         <section class="gallerySection hidden">
