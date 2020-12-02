@@ -204,13 +204,13 @@ function cameraSettings() {
         let imgSection = document.querySelector('.pictureSection');
         imgSection.classList.remove('hidden');
 
-        addImage(pictureImage.src, city, country);
+        addImageToGalley(pictureImage.src, city, country);
     });
 }
 
 
 //To choose if adding the picture to gallery or not
-function addImage(image, city, country) {
+function addImageToGalley(image, city, country) {
     const yesButton = document.querySelector('.yesButton');
     const noButton = document.querySelector('.noButton');
     let divElem = document.querySelector('.pictureSection');
@@ -226,7 +226,7 @@ function addImage(image, city, country) {
 
     yesButton.addEventListener('click', () => {
         if (img.imgUrl !== "") {
-            addToGallery(img);
+            createInGallery(img);
             notificationSettings(img.imgUrl);
             divElem.classList.add('hidden');
             img.imgUrl = "";
@@ -304,8 +304,8 @@ function gallerySettings() {
 }
 
 
-//Adding and showing the new image in the gallery
-function addToGallery(img) {
+//Showing the new image in the gallery
+function createInGallery(img) {
     const galleryImg = document.querySelector('.gallerySection');
     let newImages = [];
     newImages.push(img);
