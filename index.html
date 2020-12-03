@@ -7,7 +7,6 @@
     <meta name="theme-color" content="#86b881" />
     <title>Instablam</title>
     <link rel="stylesheet" href="style/style.css">
-    <link rel="stylesheet" href="/style/font-awesome/css/all.css">
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="shortcut icon" href="img/192.png" type="image/x-icon">
     <link rel="apple-touch-icon" href="img/192.png">
@@ -23,8 +22,10 @@
         </header>
 
         <section class="showSection">
-            <button class="show-gallery-button">Show Gallery</button>
-            <button class="show-camera-button">Take a photo</button>
+            <div>
+                <button class="show-gallery-button">Gallery</button>
+                <button class="show-camera-button">Camera</button>
+            </div>
         </section>
 
         <section class="pictureSection hidden">
@@ -43,13 +44,13 @@
             <h2>Take a picture</h2>
             <div class="cameraSettings">
                 <p class="error-message"></p>
-                <video src="" autoplay poster="" controls width="480" height="260" class="video">
+                <video src="" autoplay poster="" controls class="video">
                 </video>
                 <div>
                     <button class="camera-on">Camera On</button>
                     <button class="camera-off hidden">Camera Off</button>
                     <button class="take-picture hidden">Take picture</button>
-                    <button class="change-camera hidden">Switch camera</button>
+                    <button class="change-camera hidden">Change view</button>
                 </div>
             </div>
         </section>

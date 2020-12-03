@@ -280,6 +280,10 @@ function gallerySettings() {
         `<img src="img/${image.imgUrl}" alt="Picture in gallery" class="gallery-images">
         <p class="location">Photographed at ${image.time}, ${image.city}, ${image.country}.</p>`;
 
+
+        let divElem = document.createElement('div');
+        divElem.classList.add('pictureButtons');
+
         //To download the image
         let downloadLink = document.createElement('a');
         downloadLink.setAttribute('download', url);
@@ -301,9 +305,10 @@ function gallerySettings() {
             deleteButton.parentElement.remove();
         });
 
+        divElem.appendChild(downloadLink);
+        divElem.appendChild(deleteButton);
 
-        theImage.appendChild(downloadLink);
-        theImage.appendChild(deleteButton);
+        theImage.appendChild(divElem);
         allImages.append(theImage);
     }    
 }
@@ -323,6 +328,10 @@ function createInGallery(img) {
         theImage.innerHTML += 
         `<img src="${image.imgUrl}" alt="Picture in gallery" class="gallery-images">
         <p class="location">Photographed at ${image.date}, ${image.city}, ${image.country}.</p>`;
+
+
+        let divElem = document.createElement('div');
+        divElem.classList.add('pictureButtons');
 
         //To download the image
         let downloadLink = document.createElement('a');
@@ -345,8 +354,10 @@ function createInGallery(img) {
         });
 
 
-        theImage.appendChild(downloadLink);
-        theImage.appendChild(deleteButton);
+        divElem.appendChild(downloadLink);
+        divElem.appendChild(deleteButton);
+
+        theImage.appendChild(divElem);
         allImages.append(theImage);
     }     
 }
