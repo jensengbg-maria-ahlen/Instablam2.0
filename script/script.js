@@ -201,8 +201,10 @@ function cameraSettings() {
         let imgUrl = URL.createObjectURL(blob);
         pictureImage.src = imgUrl;
         
+        let cameraSection = document.querySelector('.cameraSection');
         let imgSection = document.querySelector('.pictureSection');
         imgSection.classList.remove('hidden');
+        cameraSection.classList.add('hidden');
 
         addImageToGalley(pictureImage.src, city, country);
     });
@@ -213,8 +215,10 @@ function cameraSettings() {
 function addImageToGalley(image, city, country) {
     const yesButton = document.querySelector('.yesButton');
     const noButton = document.querySelector('.noButton');
-    let divElem = document.querySelector('.pictureSection');
+    let cameraSection = document.querySelector('.cameraSection');
+    let imgSection = document.querySelector('.pictureSection');
     let date = new Date().toISOString().slice(0,10);
+    let position = document.querySelector('.position')
 
     let img = {
         imgUrl: image,
@@ -223,19 +227,22 @@ function addImageToGalley(image, city, country) {
         date: date
     }
 
+    position.innerHTML = `Picture was taken at ${city}, ${country}.`
 
     yesButton.addEventListener('click', () => {
         if (img.imgUrl !== "") {
             createInGallery(img);
             notificationSettings(img.imgUrl);
-            divElem.classList.add('hidden');
+            imgSection.classList.add('hidden');
+            cameraSection.classList.remove('hidden');
             img.imgUrl = "";
         }
     })
 
     noButton.addEventListener('click', () => {
         img.imgUrl = "";
-        divElem.classList.add('hidden');
+        imgSection.classList.add('hidden');
+        cameraSection.classList.remove('hidden');
     })
     
 }
@@ -243,8 +250,7 @@ function addImageToGalley(image, city, country) {
 
 //gallery with previous pictures
 function gallerySettings() {
-    const galleryImg = document.querySelector('.gallerySection');
-    galleryImg.innerHTML = '';
+    const allImages = document.querySelector('.allImages');
 
     let currentImg = [ 
         {
@@ -271,8 +277,7 @@ function gallerySettings() {
         let url = image.imgUrl;
        
         theImage.innerHTML += 
-        `<h2>The gallery</h2>
-        <img src="img/${image.imgUrl}" alt="Picture in gallery" class="gallery-images">
+        `<img src="img/${image.imgUrl}" alt="Picture in gallery" class="gallery-images">
         <p class="location">Photographed at ${image.time}, ${image.city}, ${image.country}.</p>`;
 
         //To download the image
@@ -299,14 +304,14 @@ function gallerySettings() {
 
         theImage.appendChild(downloadLink);
         theImage.appendChild(deleteButton);
-        galleryImg.append(theImage);
+        allImages.append(theImage);
     }    
 }
 
 
 //Showing the new image in the gallery
 function createInGallery(img) {
-    const galleryImg = document.querySelector('.gallerySection');
+    const allImages = document.querySelector('.allImages');
     let newImages = [];
     newImages.push(img);
 
@@ -342,6 +347,6 @@ function createInGallery(img) {
 
         theImage.appendChild(downloadLink);
         theImage.appendChild(deleteButton);
-        galleryImg.append(theImage);
+        allImages.append(theImage);
     }     
 }

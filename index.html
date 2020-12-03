@@ -27,31 +27,36 @@
             <button class="show-camera-button">Take a photo</button>
         </section>
 
-        <section class="cameraSection hidden">
-            <h2>Take a picture</h2>
-            <p class="error-message"></p>
-            <video src="" autoplay poster="" controls width="320" height="320" class="video">
-            </video>
-            <div>
-                <button class="camera-on">Camera On</button>
-                <button class="camera-off hidden">Camera Off</button>
-                <button class="take-picture hidden">Take picture</button>
-                <button class="change-camera hidden">Switch camera</button>
+        <section class="pictureSection hidden">
+            <h2>Save picture to gallery?</h2>
+            <div class="pictureSettings">
+                <img src="" alt="Picture taken" class="picture-taken">
+                <p class="position"></p>
+                <div>
+                    <button class="yesButton">Yes</button>
+                    <button class="noButton">No</button>
+                </div>
             </div>
         </section>
 
-        <section class="pictureSection hidden">
-            <div>
-                <h3 class="info">Want to save picture to the gallery?</h3>
-                <button class="yesButton">Yes</button>
-                <button class="noButton">No</button>
+        <section class="cameraSection hidden">
+            <h2>Take a picture</h2>
+            <div class="cameraSettings">
+                <p class="error-message"></p>
+                <video src="" autoplay poster="" controls width="480" height="260" class="video">
+                </video>
+                <div>
+                    <button class="camera-on">Camera On</button>
+                    <button class="camera-off hidden">Camera Off</button>
+                    <button class="take-picture hidden">Take picture</button>
+                    <button class="change-camera hidden">Switch camera</button>
+                </div>
             </div>
-
-            <img src="" alt="Picture taken" class="picture-taken">
-            <p id="position"></p>
         </section>
 
         <section class="gallerySection hidden">
+            <h2>The gallery</h2>
+            <div class="allImages"></div>
         </section>
     </main>
 
