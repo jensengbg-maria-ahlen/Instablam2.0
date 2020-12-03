@@ -17,9 +17,9 @@ Hope you will enjoy the app.
 |Desktop Safari  |❔|❔|❔|❔|❔|❔|
 |Desktop Edge    |✔️|✔️|✔️|✔️|✔️|
 |Mobil Chrome    |✔️|✔️|✔️|✔️|✔️|
-|Mobil   Firefox |✔️|✔️|⛔|✔️|✔️|
-|Mobil   Safari  |✔️|✔️|⛔|✔️|✔️|
-|Mobil   Edge    |✔️|✔️|✔️|✔️|✔️|
+|Mobil Firefox |✔️|✔️|⛔|✔️|✔️|
+|Mobil Safari  |✔️|✔️|⛔|✔️|✔️|
+|Mobil Edge    |✔️|✔️|✔️|✔️|✔️|
 
 
 
