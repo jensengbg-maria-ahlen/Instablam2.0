@@ -49,9 +49,9 @@ window.addEventListener('load', () => {
 
 //Geolocation
 function getPosition() {
-    let errorMessage = document.querySelector('.error-message');
-
     if ('geolocation' in navigator) {    
+        let errorMessage = document.querySelector('.error-message');
+        
         try {
             const geo = navigator.geolocation;
             geo.getCurrentPosition(pos => {
@@ -59,7 +59,7 @@ function getPosition() {
                 let lng = pos.coords.longitude;
                 getAdressFromPosition(lat, lng);
             }, error => {
-                console.log('locationSettings error: ', error);
+                errorMessage.innerHTML = 'Please allow position and I will tell you where you are.';
             });
         } catch (e) {
             errorMessage.innerHTML = 'This device does not have access to the Geolocation API.';
@@ -68,17 +68,22 @@ function getPosition() {
 }
 
 async function getAdressFromPosition(lat, lng) {
+    let errorMessage = document.querySelector('.error-message');
     const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=b756363ff58242588fc1d3ba17062641`;
     try {
         const response = await fetch(url);
         const data = await response.json();
+        console.log(data.message);
         
-        const city = data.results[0].components.city_district;
-        const country = data.results[0].components.country;
-        saveAdressInLocalStorage(city, country);
-
-    } catch (e) {
-        console.log('getAdressFromPosition error: ', e)
+        if(data.error) {
+            errorMessage.innerHTML = 'This device does not have access to the Geolocation API.';
+        } else {
+            const city = data.results[0].components.city_district;
+            const country = data.results[0].components.country;
+            saveAdressInLocalStorage(city, country);
+        }
+    } catch (error) {
+        errorMessage.innerHTML = `Could not find your city. Errormessage${error}`
     }
 }
 
@@ -220,14 +225,20 @@ function addImageToGalley(image, city, country) {
     let date = new Date().toISOString().slice(0,10);
     let position = document.querySelector('.position')
 
+    if (city == null && country == null) {
+        position.innerHTML = `Could not retrive location information.`
+        city = 'City: Unknown',
+        country = 'Country: Unknown'
+    } else {
+        position.innerHTML = `Picture was taken at ${city}, ${country}.`
+    }
+
     let img = {
         imgUrl: image,
         city: city,
         country: country,
         date: date
     }
-
-    position.innerHTML = `Picture was taken at ${city}, ${country}.`
 
     yesButton.addEventListener('click', () => {
         if (img.imgUrl !== "") {
