@@ -301,7 +301,7 @@ function gallerySettings() {
         deleteButton.innerHTML = 'Delete';
 
         deleteButton.addEventListener('click', () => {
-            deleteButton.parentElement.remove();
+            divElem.parentElement.remove();
         });
 
         //To download the image
@@ -351,7 +351,7 @@ function createInGallery(img) {
         deleteButton.innerHTML = 'Delete';
 
         deleteButton.addEventListener('click', () => {
-            deleteButton.parentElement.remove();
+            divElem.parentElement.remove();
         });
 
 
@@ -366,7 +366,7 @@ function createInGallery(img) {
             downloadLink.download = downloadLink.href;
         });  
 
-        
+
         divElem.appendChild(deleteButton);
         divElem.appendChild(downloadLink);
         
