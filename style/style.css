@@ -48,11 +48,12 @@ h2, p {
     }
 }
 
+
+/* standard design */
+
 .hidden{
     display: none;
 }
-
-
 
 
 a {
@@ -118,7 +119,8 @@ header {
 }
 
 
-/* the taken picture */
+
+/* the new picture */
 .pictureSection {
     width: 100%;
     grid-area: pictureSection;

@@ -1,7 +1,7 @@
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js')
-        .then(reg => {
-            console.log('Service worker registred.');
+        .then(reg => { 
+            console.log('Service worker registred.'); 
         })
         .catch(error => {
             console.log('Service worker registration error: ', error.message)
@@ -73,8 +73,7 @@ async function getAdressFromPosition(lat, lng) {
     try {
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data.message);
-        
+
         if(data.error) {
             errorMessage.innerHTML = 'This device does not have access to the Geolocation API.';
         } else {
@@ -96,7 +95,7 @@ function saveAdressInLocalStorage(city, country) {
 
 
 //Notifications
-async function notificationSettings(image) {
+async function notificationSettings() {
     let notificationPermission = false;
     const errorMessage = document.querySelector('.error-message')
     const answer = await Notification.requestPermission();
@@ -104,24 +103,23 @@ async function notificationSettings(image) {
     if (answer == 'granted') {
         notificationPermission = true;
     } else if (answer == 'denied') {
-        console.log('Notificaton: User denied notification');
-    } else {
-        console.log('Notification: user declined to answer');
-    }
-
-    if (!notificationPermission) {
         errorMessage.innerHTML = 'We do not have permission to show notification';
-        return;
+    } else {
+        errorMessage.innerHTML = 'We do not have permission to show notification';
     }
+}
 
+//Show notification if allowed
+function showNotification(image) {
     const options = {
-        body: "Image added to gallery",
+        body: "Added to gallery",
         icon: image
     }
 
     navigator.serviceWorker.ready.then(reg => 
-        reg.showNotification('Image', options));
+        reg.showNotification('New image', options));
 }
+
 
 
 
@@ -142,6 +140,7 @@ function cameraSettings() {
 
     cameraOnButton.addEventListener('click', async () => {
         getPosition();
+        notificationSettings();
         errorMessage.innerHTML = '';
         try {
             const md = navigator.mediaDevices;
@@ -216,6 +215,7 @@ function cameraSettings() {
 }
 
 
+
 //To choose if adding the picture to gallery or not
 function addImageToGalley(image, city, country) {
     const yesButton = document.querySelector('.yesButton');
@@ -233,6 +233,7 @@ function addImageToGalley(image, city, country) {
         position.innerHTML = `Picture was taken at ${city}, ${country}.`
     }
 
+
     let img = {
         imgUrl: image,
         city: city,
@@ -243,7 +244,7 @@ function addImageToGalley(image, city, country) {
     yesButton.addEventListener('click', () => {
         if (img.imgUrl !== "") {
             createInGallery(img);
-            notificationSettings(img.imgUrl);
+            showNotification(img.imgUrl);
             imgSection.classList.add('hidden');
             cameraSection.classList.remove('hidden');
             img.imgUrl = "";
@@ -255,15 +256,14 @@ function addImageToGalley(image, city, country) {
         imgSection.classList.add('hidden');
         cameraSection.classList.remove('hidden');
     })
-    
 }
 
 
-//gallery with previous pictures
+//gallery with static pictures
 function gallerySettings() {
     const allImages = document.querySelector('.allImages');
 
-    let currentImg = [ 
+    let currentImages = [ 
         {
             imgUrl: 'forest.jpg',
             city: 'State of Amazonas',
@@ -282,7 +282,7 @@ function gallerySettings() {
             time: '2017-11-20'
         }];
 
-    for(image of currentImg) {
+    for(image of currentImages) {
         let theImage = document.createElement('div');
         theImage.classList.add('image');
         let url = image.imgUrl;
@@ -295,6 +295,7 @@ function gallerySettings() {
         let divElem = document.createElement('div');
         divElem.classList.add('pictureButtons');
 
+
         //To delete selected image
         let deleteButton = document.createElement('button');
         deleteButton.classList.add('delete-button');
@@ -303,6 +304,7 @@ function gallerySettings() {
         deleteButton.addEventListener('click', () => {
             divElem.parentElement.remove();
         });
+
 
         //To download the image
         let downloadLink = document.createElement('a');
@@ -326,6 +328,8 @@ function gallerySettings() {
 }
 
 
+
+
 //Showing the new image in the gallery
 function createInGallery(img) {
     const allImages = document.querySelector('.allImages');
@@ -345,6 +349,7 @@ function createInGallery(img) {
         let divElem = document.createElement('div');
         divElem.classList.add('pictureButtons');
 
+
         //To delete selected image
         let deleteButton = document.createElement('button');
         deleteButton.classList.add('delete-button');
@@ -363,7 +368,7 @@ function createInGallery(img) {
         downloadLink.href = url;
 
         downloadLink.addEventListener('click', () => {
-            downloadLink.download = downloadLink.href;
+            downloadLink.download = 'img.jpg';
         });  
 
 
