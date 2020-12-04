@@ -1,5 +1,6 @@
-# Instablam
+# Instablam                       
 
+![alt text](https://github.com/jensengbg-maria-ahlen/Instablam2.0/blob/main/img/192.png "Logo")
 ## About Instablam
 Instablam is a progressiv web application.
 You can take pictures with your phone, tablet, computer and save them in your own personal gallery. 
@@ -20,11 +21,13 @@ Hope you will enjoy the app.
 |Mobil Firefox |✔️|✔️|⛔|✔️|✔️|
 |Mobil Safari  |✔️|✔️|⛔|✔️|✔️|
 |Mobil Edge    |✔️|✔️|✔️|✔️|✔️|
+|Mobil Samsung    |✔️|✔️|✔️|✔️|✔️|
 
 
 
-## Lighthouse
-|Kategori |Poäng |
+
+## Lighthouse on both desktop and mobile
+|Category |Points |
 |-|-|
 |Fast and reliable | 3 / 3 |
 |Installable | 3 / 3 |
