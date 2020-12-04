@@ -20,11 +20,13 @@ Hope you will enjoy the app.
 |Mobil Firefox |✔️|✔️|⛔|✔️|✔️|
 |Mobil Safari  |✔️|✔️|⛔|✔️|✔️|
 |Mobil Edge    |✔️|✔️|✔️|✔️|✔️|
+|Mobil Samsung    |✔️|✔️|✔️|✔️|✔️|
 
 
 
-## Lighthouse
-|Kategori |Poäng |
+
+## Lighthouse on both desktop and mobile
+|Category |Points |
 |-|-|
 |Fast and reliable | 3 / 3 |
 |Installable | 3 / 3 |
