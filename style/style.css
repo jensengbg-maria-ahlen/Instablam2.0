@@ -176,6 +176,13 @@ header {
 
 .pictureButtons {
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pictureButtons button {
+    margin: 1em;
 }
 
 

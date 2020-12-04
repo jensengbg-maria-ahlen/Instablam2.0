@@ -295,6 +295,15 @@ function gallerySettings() {
         let divElem = document.createElement('div');
         divElem.classList.add('pictureButtons');
 
+        //To delete selected image
+        let deleteButton = document.createElement('button');
+        deleteButton.classList.add('delete-button');
+        deleteButton.innerHTML = 'Delete';
+
+        deleteButton.addEventListener('click', () => {
+            deleteButton.parentElement.remove();
+        });
+
         //To download the image
         let downloadLink = document.createElement('a');
         downloadLink.setAttribute('download', url);
@@ -307,17 +316,9 @@ function gallerySettings() {
             downloadLink.download = downloadLink.href;
         });  
 
-        //To delete selected image
-        let deleteButton = document.createElement('button');
-        deleteButton.classList.add('delete-button');
-        deleteButton.innerHTML = 'Delete';
-
-        deleteButton.addEventListener('click', () => {
-            deleteButton.parentElement.remove();
-        });
-
-        divElem.appendChild(downloadLink);
+        
         divElem.appendChild(deleteButton);
+        divElem.appendChild(downloadLink);
 
         theImage.appendChild(divElem);
         allImages.append(theImage);
@@ -344,6 +345,16 @@ function createInGallery(img) {
         let divElem = document.createElement('div');
         divElem.classList.add('pictureButtons');
 
+        //To delete selected image
+        let deleteButton = document.createElement('button');
+        deleteButton.classList.add('delete-button');
+        deleteButton.innerHTML = 'Delete';
+
+        deleteButton.addEventListener('click', () => {
+            deleteButton.parentElement.remove();
+        });
+
+
         //To download the image
         let downloadLink = document.createElement('a');
         downloadLink.setAttribute('download', url);
@@ -355,19 +366,10 @@ function createInGallery(img) {
             downloadLink.download = downloadLink.href;
         });  
 
-        //To delete selected image
-        let deleteButton = document.createElement('button');
-        deleteButton.classList.add('delete-button');
-        deleteButton.innerHTML = 'Delete';
-
-        deleteButton.addEventListener('click', () => {
-            deleteButton.parentElement.remove();
-        });
-
-
-        divElem.appendChild(downloadLink);
+        
         divElem.appendChild(deleteButton);
-
+        divElem.appendChild(downloadLink);
+        
         theImage.appendChild(divElem);
         allImages.append(theImage);
     }     
