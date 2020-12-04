@@ -1,5 +1,6 @@
-# Instablam
+# Instablam                       
 
+![alt text](https://github.com/jensengbg-maria-ahlen/Instablam2.0/blob/main/img/192.png "Logo")
 ## About Instablam
 Instablam is a progressiv web application.
 You can take pictures with your phone, tablet, computer and save them in your own personal gallery. 
